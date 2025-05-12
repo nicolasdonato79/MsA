@@ -1,10 +1,10 @@
-package com.example.msMiddleware.dto;
+package com.example.msA.dto;
 
 import lombok.Data;
 
 @Data
 public class UserDetailDTO {
-    private Long userId;
+    private Integer userId;
     private String username;
     private String firstName;
     private String lastName;

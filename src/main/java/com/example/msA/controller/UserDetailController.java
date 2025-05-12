@@ -1,6 +1,7 @@
 package com.example.msA.controller;
 
 import com.example.msA.Service.UserDetailService;
+import com.example.msA.dto.UserDetailDTO;
 import com.example.msA.entity.UserDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,14 +16,14 @@ public class UserDetailController {
     @Autowired private UserDetailService service;
 
     @PostMapping
-    public UserDetail create(@RequestBody UserDetail userDetail) {
-        return service.create(userDetail);
+    public UserDetailDTO create(@RequestBody UserDetailDTO userDetailDto) {
+        return service.create(userDetailDto);
     }
 
     // endpoint llamado desde middleware cuando cambia la base legacy
     @PostMapping("/sync-from-legacy")
-    public ResponseEntity<Void> syncFromLegacy(@RequestBody UserDetail userDetail) {
-        service.updateFromLegacy(userDetail);
+    public ResponseEntity<Void> syncFromLegacy(@RequestBody UserDetailDTO userDetailDto) {
+        service.updateFromLegacy(userDetailDto);
         return ResponseEntity.ok().build();
     }
 }
