@@ -10,4 +10,5 @@ public class UserDetailDTO {
     private String lastName;
     private String gender;
     private Integer status;
+    private String password;
 }
