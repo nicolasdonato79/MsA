@@ -1,41 +1,18 @@
-version: '3.8'
 services:
-  postgres:
-    image: postgres:15
-    container_name: postgres_santa_fe
-    environment:
-      POSTGRES_DB: santa_fe_db
-      POSTGRES_USER: santa_fe_admin
-      POSTGRES_PASSWORD: santa_fe
-    ports:
-      - "5432:5432"
-    networks:
-      - santa_net
-
-  eureka:
-    image: netflixoss/eureka:latest
-    container_name: eureka_server
-    ports:
-      - "8761:8761"
-    networks:
-      - santa_net
-
   msa:
     build: .
-    container_name: ms_a_app
-    depends_on:
-      - postgres
-      - eureka
     ports:
       - "8080:8080"
-    networks:
-      - santa_net
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/santa_fe_db?ApplicationName=MsA
+      SPRING_APPLICATION_NAME: msA
+      SPRING_JPA_HIBERNATE_DDL-AUTO: update
+      SPRING_JPA_SHOW_SQL: "true"
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
+      SPRING_DATASOURCE_HIKARI_SCHEMA: santa_fe
+      SPRING_DATASOURCE_URL: jdbc:postgresql://172.20.68.92:5432/santa_fe_db?ApplicationName=MsA
       SPRING_DATASOURCE_USERNAME: santa_fe_admin
       SPRING_DATASOURCE_PASSWORD: santa_fe
-      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka:8761/eureka/
-
-networks:
-  santa_net:
-    driver: bridge
+      EUREKA_CLIENT_REGISTER_WITH_EUREKA: "true"
+      EUREKA_CLIENT_FETCH_REGISTRY: "true"
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://host.docker.internal:8761/eureka/
+    network_mode: "host"
