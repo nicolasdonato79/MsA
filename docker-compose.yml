@@ -1,18 +1,34 @@
+version: '3.8'
+
 services:
-  msa:
-    build: .
+  service-eureka:
+    build:
+      context: ./service-eureka
+    container_name: service-eureka
+    ports:
+      - "8761:8761"
+    networks:
+      - santa_net
+
+  msa-app:
+    build:
+      context: ./msa-app
+    container_name: msa-app
     ports:
       - "8080:8080"
     environment:
-      SPRING_APPLICATION_NAME: msA
-      SPRING_JPA_HIBERNATE_DDL-AUTO: update
-      SPRING_JPA_SHOW_SQL: "true"
-      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
-      SPRING_DATASOURCE_HIKARI_SCHEMA: santa_fe
-      SPRING_DATASOURCE_URL: jdbc:postgresql://172.20.68.92:5432/santa_fe_db?ApplicationName=MsA
+      SPRING_APPLICATION_NAME: msa
+      SPRING_DATASOURCE_URL: jdbc:postgresql://172.20.68.92:5432/santa_fe_db
       SPRING_DATASOURCE_USERNAME: santa_fe_admin
       SPRING_DATASOURCE_PASSWORD: santa_fe
       EUREKA_CLIENT_REGISTER_WITH_EUREKA: "true"
       EUREKA_CLIENT_FETCH_REGISTRY: "true"
-      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://host.docker.internal:8761/eureka/
-    network_mode: "host"
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://service-eureka:8761/eureka/
+    depends_on:
+      - service-eureka
+    networks:
+      - santa_net
+
+networks:
+  santa_net:
+    driver: bridge
