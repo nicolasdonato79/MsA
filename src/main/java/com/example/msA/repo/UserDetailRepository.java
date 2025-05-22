@@ -3,4 +3,10 @@ package com.example.msA.repo;
 import com.example.msA.entity.UserDetail;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserDetailRepository extends JpaRepository<UserDetail, Long> {}
+import java.util.Optional;
+
+public interface UserDetailRepository extends JpaRepository<UserDetail, Long> {
+
+    Optional<UserDetail> findByUsername(String username);
+
+}
