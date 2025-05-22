@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  service-eureka:
+    build:
+      context: ./service-eureka
+    container_name: service-eureka
+    ports:
+      - "8761:8761"
+    networks:
+      - santa_net
+
+  msa-app:
+    build:
+      context: ./msa-app
+    container_name: msa-app
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_APPLICATION_NAME: msa
+      SPRING_DATASOURCE_URL: jdbc:postgresql://172.20.68.92:5432/santa_fe_db
+      SPRING_DATASOURCE_USERNAME: santa_fe_admin
+      SPRING_DATASOURCE_PASSWORD: santa_fe
+      EUREKA_CLIENT_REGISTER_WITH_EUREKA: "true"
+      EUREKA_CLIENT_FETCH_REGISTRY: "true"
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://service-eureka:8761/eureka/
+    depends_on:
+      - service-eureka
+    networks:
+      - santa_net
+
+networks:
+  santa_net:
+    driver: bridge
