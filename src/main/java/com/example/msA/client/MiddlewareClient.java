@@ -2,15 +2,21 @@ package com.example.msA.client;
 
 import com.example.msA.dto.UserDetailDTO;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 // FeignClient a Middleware
 @FeignClient(name = "MSMIDDLEWARE")
 public interface MiddlewareClient {
+
     @PostMapping("/msmiddleware/users-details/sync-to-legacy")
-    void syncToLegacy(@RequestBody UserDetailDTO userDetail);
+    void syncToLegacyCreate(@RequestBody UserDetailDTO userDetail);
+
+    @PutMapping("/msmiddleware/users-details/sync-to-legacy")
+    void syncToLegacyUpdate(@RequestBody UserDetailDTO userDetail);
+
+    @DeleteMapping("/msmiddleware/users-details/sync-to-legacy")
+    void syncToLegacyDelete(@RequestBody UserDetailDTO userDetail);
+
 }
 
 
