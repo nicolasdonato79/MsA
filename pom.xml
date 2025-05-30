@@ -11,7 +11,7 @@
 	<groupId>com.example</groupId>
 	<artifactId>msA</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>msMiddileware</name>
+	<name>msMiddleware</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
