@@ -17,6 +17,16 @@ public interface MiddlewareClient {
     @DeleteMapping("/msmiddleware/users-details/sync-to-legacy")
     void syncToLegacyDelete(@RequestBody UserDetailDTO userDetail);
 
+
+//    @PostMapping("/users-details/sync-to-legacy")
+//    void syncToLegacyCreate(@RequestBody UserDetailDTO userDetail);
+//
+//    @PutMapping("/users-details/sync-to-legacy")
+//    void syncToLegacyUpdate(@RequestBody UserDetailDTO userDetail);
+//
+//    @DeleteMapping("/users-details/sync-to-legacy")
+//    void syncToLegacyDelete(@RequestBody UserDetailDTO userDetail);
+
 }
 
 
