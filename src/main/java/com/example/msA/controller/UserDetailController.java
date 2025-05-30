@@ -49,7 +49,7 @@ public class UserDetailController {
 
     @DeleteMapping("/sync-from-legacy")
     public ResponseEntity<Void> syncFromLegacyDelete(@RequestBody UserDetailDTO userDetailDto) {
-        service.update(userDetailDto);
+        service.delete(userDetailDto);
         return ResponseEntity.ok().build();
     }
 }
