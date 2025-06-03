@@ -25,19 +25,18 @@ public class UserDetailService {
 
         repo.findByUsername(userDetailDto.getUsername())
                 .ifPresent(usuario -> {
-                    throw new RuntimeException("User already exists " + usuario.getUsername());
+                    throw new RuntimeException("User in MSA BBDD already exists " + usuario.getUsername());
                 });
 
-
         UserDetail saved = repo.save(mapper.toEntity(userDetailDto));
-        userDetailDto=mapper.toDTO(saved);
+        userDetailDto = mapper.toDTO(saved);
         middleware.syncToLegacyCreate(userDetailDto);
         return userDetailDto;
     }
 
     public ResponseEntity<UserDetailDTO> update(UserDetailDTO userDetailDto) {
         UserDetail userDetail = repo.findByUsername(userDetailDto.getUsername())
-                .orElseThrow(() -> new RuntimeException("User not found " + userDetailDto.getUsername()));
+                .orElseThrow(() -> new RuntimeException("User in MSA BBDD not found " + userDetailDto.getUsername()));
 
         mapper.updateEntityFromDTO(userDetailDto, userDetail);
         UserDetail saved = repo.save(userDetail);
@@ -49,16 +48,13 @@ public class UserDetailService {
         return ResponseEntity.ok(updatedDto);
     }
 
-    //Logico
-    public  ResponseEntity<UserDetailDTO>  delete(UserDetailDTO userDetailDto) {
+    //Físico
+    public ResponseEntity<UserDetailDTO> delete(UserDetailDTO userDetailDto) {
         UserDetail userDetail = repo.findByUsername(userDetailDto.getUsername())
-                .orElseThrow(() -> new RuntimeException("User not found " + userDetailDto.getUsername()));
-        userDetail.setStatus((short)0);
-        UserDetail saved = repo.save(userDetail);
-        UserDetailDTO updatedDto = mapper.toDTO(saved);
+                .orElseThrow(() -> new RuntimeException("User in MSA BBAA not found " + userDetailDto.getUsername()));
+        repo.delete(userDetail);
         middleware.syncToLegacyDelete(userDetailDto);
-
-        return ResponseEntity.ok(updatedDto);
+        return ResponseEntity.ok(userDetailDto);
     }
 
 }
