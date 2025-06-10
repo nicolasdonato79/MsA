@@ -1,6 +1,6 @@
 package com.example.msA.controller;
 
-import com.example.msA.Service.UserDetailService;
+import com.example.msA.service.UserDetailService;
 import com.example.msA.dto.UserDetailDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
