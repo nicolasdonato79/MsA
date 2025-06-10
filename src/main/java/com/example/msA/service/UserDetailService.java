@@ -1,16 +1,13 @@
-package com.example.msA.Service;
+package com.example.msA.service;
 
 import com.example.msA.client.MiddlewareClient;
 import com.example.msA.dto.UserDetailDTO;
 import com.example.msA.entity.UserDetail;
 import com.example.msA.mapper.UserDetailMapper;
 import com.example.msA.repo.UserDetailRepository;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class UserDetailService {
